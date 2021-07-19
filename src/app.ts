@@ -1,6 +1,7 @@
 import express from "express";
 import logger from "morgan";
 import * as path from "path";
+// import { Router } from "express";
 
 import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler";
 
@@ -21,3 +22,18 @@ app.use("/", index);
 
 app.use(errorNotFoundHandler);
 app.use(errorHandler);
+
+app.use(express.static('public/images'))
+
+// const router = Router()
+
+
+// app.use('/api', router)
+
+// let img={
+//     url: 'http://localhost:3000/images/wow-tbc.jpg'
+// }
+
+// router.get('/get',(req,res) => {
+//     return res.json(img)
+// })
