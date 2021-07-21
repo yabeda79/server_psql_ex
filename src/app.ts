@@ -2,15 +2,26 @@ import express from "express";
 import logger from "morgan";
 import * as path from "path";
 // import { Router } from "express";
+import cors from 'cors';
 
 import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler";
 
 // Routes
 import { index } from "./routes/index";
+import gamesRouter from './routes/games'
 // Create Express server
 export const app = express();
 
+app.use(cors());
+app.options('*', cors());
+
+import {getGames} from './controllers/games'
+app.get('/games', getGames)
+// app.use('/games', gamesRouter)
 // Express configuration
+// app.listen(4000,()=>{console.log('afasf')})
+
+
 app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
@@ -25,15 +36,9 @@ app.use(errorHandler);
 
 app.use(express.static('public/images'))
 
-// const router = Router()
+// app.use('/games', gamesRouter)
 
 
-// app.use('/api', router)
 
-// let img={
-//     url: 'http://localhost:3000/images/wow-tbc.jpg'
-// }
 
-// router.get('/get',(req,res) => {
-//     return res.json(img)
-// })
+

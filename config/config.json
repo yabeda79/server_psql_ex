@@ -1,4 +1,11 @@
 {
+    "local": {
+    "username": "postgres",
+    "password": "vlad23karol1999",
+    "database": "test1",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
     "development": {
       "username": "postgres",
       "password": "vlad23karol1999",
