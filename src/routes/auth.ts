@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import User from '../../models/user'
 import bcrypt from 'bcryptjs';
-import {body, check, validationResult} from 'express-validator'
+import { check, validationResult} from 'express-validator'
 import jwt from 'jsonwebtoken'
 
 const authRouter = Router()
@@ -43,6 +43,7 @@ authRouter.post(
         res.status(201).json({message: 'User created'})
 
     } catch (e) {
+        console.log(e)
         res.status(500).json({message: 'Something went wrong, try again later'})
     }
 })
@@ -55,6 +56,8 @@ authRouter.post(
         check('password', 'Enter password').exists()
     ], 
     async (req: Request, res: Response)=>{
+        console.log(req.body)
+
         try {
 
             const errors = validationResult(req)
@@ -88,6 +91,7 @@ authRouter.post(
            res.json({token, userId: user.id})
     
         } catch (e) {
+            console.log(e)
             res.status(500).json({message: 'Something went wrong, try again later'})
         }        
 })
