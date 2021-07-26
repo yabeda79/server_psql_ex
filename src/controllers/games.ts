@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import Games from '../../models/games'
+import Games from '../../models/game'
 
 export const getGames = async (req: Request, res: Response, next:NextFunction): Promise<void> => {
     const result = await Games.findAll()

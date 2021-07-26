@@ -24,7 +24,7 @@ authRouter.post(
             });
         }
         
-        const { email, password } = req.body;
+        const { username, email, password } = req.body;
 
         const candidate = await User.findOne( { where: { email: email } } );
         if(candidate){
@@ -34,6 +34,7 @@ authRouter.post(
         const hashedPassword = await bcrypt.hash(password, 12);
         
         await User.create({
+            username: username,
             email: email,
             password: hashedPassword,
             createdAt: new Date(),
@@ -83,12 +84,12 @@ authRouter.post(
            }
 
            const token = jwt.sign(
-                { userId : user.id },
+                { userId : user.username },
                 'secret key',
                 { expiresIn: '1h' },
            );
 
-           res.json( { token, userId: user.id } );
+           res.json( { token, userId: user.username } );
     
         } catch (e) {
             console.log(e);
