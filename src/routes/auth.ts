@@ -89,7 +89,12 @@ authRouter.post(
                 { expiresIn: '1h' },
            );
 
-           res.json( { token, userId: user.username } );
+           res.json( { token,
+            userId: user.username, 
+            email: user.email, 
+            profileImg: user.profileImg, 
+            description: user.description,
+        } );
     
         } catch (e) {
             console.log(e);

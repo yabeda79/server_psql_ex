@@ -11,6 +11,7 @@ import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler";
 import { index } from "./routes/index";
 import gamesRouter from './routes/games'
 import authRouter from "./routes/auth";
+import profRouter from './routes/profile'
 // Create Express server
 export const app = express();
 
@@ -29,6 +30,7 @@ app.use(express.urlencoded({extended: true}))
 
 // app.use('/api/auth', require('./routes/auth'))
 app.use('/api/auth', authRouter)
+app.use('/api/profile', profRouter)
 
 
 app.set("port", process.env.PORT || 3000);
