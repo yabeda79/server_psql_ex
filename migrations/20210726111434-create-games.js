@@ -11,8 +11,23 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      category: {
+      genre: {
         type: Sequelize.STRING
+      },
+      age: {
+        type: Sequelize.INTEGER
+      },
+      PC: {
+        type: Sequelize.BOOLEAN
+      },
+      PS: {
+        type: Sequelize.BOOLEAN
+      },
+      Xbox: {
+        type: Sequelize.BOOLEAN
+      },
+      rating: {
+        type: Sequelize.INTEGER
       },
       description: {
         type: Sequelize.STRING

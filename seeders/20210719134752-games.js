@@ -4,8 +4,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Games', [{
       title: 'Minecraft',
-      category: 'PC',
-      description: 'Platformer',
+      genre: 'Platformer',
+      age: 6,
+      PC: true,
+      Xbox: true,
+      rating: 5,
+      description: 'Some description',
       image: 'http://localhost:3000/images/minecraft.jpg',
       manufacturer: 'Mojang',
       price: '990',

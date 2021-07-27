@@ -8,7 +8,12 @@ const sequelize = new Sequelize('test2', 'postgres', 'vlad23karol1999', {
 
 interface GamesInt {
   title: string;
-  category: string,
+  genre: string,
+  age: number,
+  PC: boolean,
+  PS: boolean,
+  Xbox: boolean,
+  rating: number,
   description: string,
   image: string,
   manufacturer: string,
@@ -18,7 +23,12 @@ interface GamesInt {
 class Games extends Model {}
   Games.init({
     title: DataTypes.STRING,
-    category: DataTypes.STRING,
+    genre: DataTypes.STRING,
+    age: DataTypes.INTEGER,
+    PC: DataTypes.BOOLEAN,
+    PS: DataTypes.BOOLEAN,
+    Xbox: DataTypes.BOOLEAN,
+    rating: DataTypes.INTEGER,
     description: DataTypes.TEXT,
     image: DataTypes.TEXT,
     manufacturer: DataTypes.STRING,

@@ -4,8 +4,11 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Games', [{
       title: 'WoW TBCC',
-      category: 'PC',
-      description: 'MMORPG',
+      genre: 'MMORPG',
+      age: 16,
+      PC: true,
+      rating: 5,
+      description: 'Some description',
       image: 'http://localhost:3000/images/wow-tbc.jpg',
       manufacturer: 'Blizzard ent.',
       price: '649',

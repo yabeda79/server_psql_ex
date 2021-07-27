@@ -29,6 +29,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}))
 
 // app.use('/api/auth', require('./routes/auth'))
+app.use('/api', gamesRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/profile', profRouter)
 

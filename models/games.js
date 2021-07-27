@@ -15,7 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   };
   Games.init({
     title: DataTypes.STRING,
-    category: DataTypes.STRING,
+    genre: DataTypes.STRING,
+    age: DataTypes.BOOLEAN,
+    PC: DataTypes.BOOLEAN,
+    PS: DataTypes.BOOLEAN,
+    Xbox: DataTypes.BOOLEAN,
+    rating: DataTypes.INTEGER,
     description: DataTypes.STRING,
     image: DataTypes.STRING,
     manufacturer: DataTypes.STRING,

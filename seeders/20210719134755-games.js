@@ -4,8 +4,11 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Games', [{
       title: 'Terraria',
-      category: 'PS',
-      description: 'Platformer',
+      genre: 'Platformer',
+      age: 6,
+      PC: true,
+      rating: 4,
+      description: 'Some description',
       image: 'http://localhost:3000/images/terraria.jpg',
       manufacturer: 'RE-Logic',
       price: '749',

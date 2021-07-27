@@ -4,8 +4,13 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Games', [{
       title: 'Overwatch',
-      category: 'PC',
-      description: 'Shoter',
+      genre: 'Shooter',
+      age: 14,
+      PC: true,
+      PS: true,
+      Xbox: true,
+      rating: 4,
+      description: 'Some description',
       image: 'http://localhost:3000/images/overwatch.png',
       manufacturer: 'Blizzard ent.',
       price: '1729',

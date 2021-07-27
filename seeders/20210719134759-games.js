@@ -4,8 +4,13 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Games', [{
       title: 'Witcher 3',
-      category: 'Xbox',
-      description: 'RPG',
+      genre: 'RPG',
+      age: 18,
+      PC: true,
+      PS: true,
+      Xbox: true,
+      rating: 5,
+      description: 'Some description',
       image: 'http://localhost:3000/images/wit3.jpg',
       manufacturer: 'Bethesda',
       price: '2899',
