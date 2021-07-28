@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Games from '../../models/game'
-
+import { Op } from "sequelize";
 
 const gamesRouter = Router()
 // api/getAll
@@ -17,30 +17,54 @@ gamesRouter.get('/getAll', async (req: Request, res: Response, next:NextFunction
 gamesRouter.post('/getFilteredByGenre', async(req:Request, res:Response)=>{
     try {
         console.log(req.body)
-        const {parameter} = req.body
+        const { Allgenres, Shooter, Platformer, RPG, MMORPG } = req.body
 
-        const games = await Games.findAll({ where: {genre: parameter}})
+        if (Allgenres) {
+            const games = await Games.findAll()
+
+            res.status(200).json(games)
+        }
+
+        const games = await Games.findAll({ where:{
+            [Op.or]:[
+                {genre: Shooter ? 'Shooter': null},
+                {genre: Platformer ? 'Platformer': null},
+                {genre: RPG ? 'RPG': null},
+                {genre: MMORPG ? 'MMORPG': null},
+            ]}})
 
         res.status(200).json(games)
 
     } catch (e) {
         console.log(e)
-        res.status(500).json( { message: 'Something went wrong, try again later' } );
+        res.status(500).json( { message: 'Something (Genre) went wrong, try again later' } );
     }
 })
 // api/getFilteredByAge
 gamesRouter.post('/getFilteredByAge', async(req:Request, res:Response)=>{
     try {
         console.log(req.body)
-        const {parameter} = req.body
+        const { Allages, three, six, twelve, eighteen} = req.body
 
-        const games = await Games.findAll({ where: {age: parameter}})
+        if (Allages) {
+            const games = await Games.findAll()
+
+            res.status(200).json(games)
+        }
+
+        const games = await Games.findAll({ where:{
+            [Op.or]:[
+                {age: three ? 3: null},
+                {age: six ? 6: null},
+                {age: twelve ? 12: null},
+                {age: eighteen ? 18: null},
+            ]}})
 
         res.status(200).json(games)
 
     } catch (e) {
         console.log(e)
-        res.status(500).json( { message: 'Something went wrong, try again later' } );
+        res.status(500).json( { message: 'Something (Age) went wrong, try again later' } );
     }
 })
 // api/getFilteredByRating
