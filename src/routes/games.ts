@@ -7,116 +7,291 @@ const gamesRouter = Router()
 gamesRouter.get('/getAll', async (req: Request, res: Response, next:NextFunction): Promise<void> => {
     try{
         const result = await Games.findAll()
-        res.status(200).json(result)
+        setTimeout(() => {
+            res.status(200).json(result)
+        }, 1000);
+        
     } catch(e){
         console.log(e)
         res.status(500).json( { message: 'Something went wrong, try again later' } );
     }
 })
-// api/getFilteredByGenre
-gamesRouter.post('/getFilteredByGenre', async(req:Request, res:Response)=>{
-    try {
-        console.log(req.body)
-        const { Allgenres, Shooter, Platformer, RPG, MMORPG } = req.body
+// -------------------------------------
 
-        if (Allgenres) {
-            const games = await Games.findAll()
-
-            res.status(200).json(games)
-        }
-
-        const games = await Games.findAll({ where:{
-            [Op.or]:[
-                {genre: Shooter ? 'Shooter': null},
-                {genre: Platformer ? 'Platformer': null},
-                {genre: RPG ? 'RPG': null},
-                {genre: MMORPG ? 'MMORPG': null},
-            ]}})
-
-        res.status(200).json(games)
-
-    } catch (e) {
-        console.log(e)
-        res.status(500).json( { message: 'Something (Genre) went wrong, try again later' } );
-    }
-})
-// api/getFilteredByAge
-gamesRouter.post('/getFilteredByAge', async(req:Request, res:Response)=>{
+// -------------------------------------
+// /api/getFilteredAll
+gamesRouter.post('/getFilteredAll', async(req:Request, res:Response)=>{
     try {
         console.log(req.body)
         const { Allages, three, six, twelve, eighteen} = req.body
+        const { Allgenres, Shooter, Platformer, RPG, MMORPG } = req.body
 
-        if (Allages) {
+        if (Allgenres && Allages) {
             const games = await Games.findAll()
+        
+            res.status(200).json(games)
+        } 
 
+        if (Allgenres && !Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {age: three ? 3: null},
+                    {age: six ? 6: null},
+                    {age: twelve ? 12: null},
+                    {age: eighteen ? 18: null},
+                ]}})
+
+                res.status(200).json(games)
+        }
+
+        if (!Allgenres && Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {genre: Shooter ? 'Shooter': null},
+                    {genre: Platformer ? 'Platformer': null},
+                    {genre: RPG ? 'RPG': null},
+                    {genre: MMORPG ? 'MMORPG': null},
+                ]}})
+    
             res.status(200).json(games)
         }
 
-        const games = await Games.findAll({ where:{
-            [Op.or]:[
-                {age: three ? 3: null},
-                {age: six ? 6: null},
-                {age: twelve ? 12: null},
-                {age: eighteen ? 18: null},
-            ]}})
+        const games = await Games.findAll(
+            { 
+                where:{
+                    [Op.or]:[
+                        {genre: Shooter ? 'Shooter': null},
+                        {genre: Platformer ? 'Platformer': null},
+                        {genre: RPG ? 'RPG': null},
+                        {genre: MMORPG ? 'MMORPG': null},
+                    ],
+                    [Op.and]:{[Op.or]:[
+                        {age: three ? 3: null},
+                        {age: six ? 6: null},
+                        {age: twelve ? 12: null},
+                        {age: eighteen ? 18: null},
+                    ]}
+                    
+                }
+            }
+        )
 
         res.status(200).json(games)
-
+    
     } catch (e) {
         console.log(e)
         res.status(500).json( { message: 'Something (Age) went wrong, try again later' } );
     }
 })
-// api/getFilteredByRating
-gamesRouter.post('/getFilteredByRating', async(req:Request, res:Response)=>{
+
+// /api/getFilteredPC
+gamesRouter.post('/getFilteredPC', async(req:Request, res:Response)=>{
     try {
         console.log(req.body)
-        const {parameter} = req.body
+        const { Allages, three, six, twelve, eighteen} = req.body
+        const { Allgenres, Shooter, Platformer, RPG, MMORPG } = req.body
 
-        const games = await Games.findAll({ where: {rating: parameter}})
+        if (Allgenres && Allages) {
+            const games = await Games.findAll({ where: {PC: true}})
+
+            res.status(200).json(games)
+        } 
+
+        if (Allgenres && !Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {age: three ? 3: null},
+                    {age: six ? 6: null},
+                    {age: twelve ? 12: null},
+                    {age: eighteen ? 18: null},
+                ],
+                [Op.and]:{PC:true}
+            }})
+
+                res.status(200).json(games)
+        }
+
+        if (!Allgenres && Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {genre: Shooter ? 'Shooter': null},
+                    {genre: Platformer ? 'Platformer': null},
+                    {genre: RPG ? 'RPG': null},
+                    {genre: MMORPG ? 'MMORPG': null},
+                ],
+                [Op.and]:{PC:true}
+            }})
+    
+            res.status(200).json(games)
+        }
+
+        const games = await Games.findAll(
+            { 
+                where:{
+                    [Op.or]:[
+                        {genre: Shooter ? 'Shooter': null},
+                        {genre: Platformer ? 'Platformer': null},
+                        {genre: RPG ? 'RPG': null},
+                        {genre: MMORPG ? 'MMORPG': null},
+                    ],
+                    [Op.and]:[{[Op.or]:[
+                        {age: three ? 3: null},
+                        {age: six ? 6: null},
+                        {age: twelve ? 12: null},
+                        {age: eighteen ? 18: null},
+                    ]},{PC: true}]
+                    
+                }
+            }
+        )
 
         res.status(200).json(games)
-
+    
     } catch (e) {
         console.log(e)
-        res.status(500).json( { message: 'Something went wrong, try again later' } );
+        res.status(500).json( { message: 'Something (Age) went wrong, try again later' } );
     }
 })
-// api/getOnPC
-gamesRouter.get('/getOnPC', async(req:Request, res:Response)=>{
+
+// /api/getFilteredPS
+gamesRouter.post('/getFilteredPS', async(req:Request, res:Response)=>{
     try {
-        const games = await Games.findAll({ where: {PC: true}})
+        console.log(req.body)
+        const { Allages, three, six, twelve, eighteen} = req.body
+        const { Allgenres, Shooter, Platformer, RPG, MMORPG } = req.body
+
+        if (Allgenres && Allages) {
+            const games = await Games.findAll({ where: {PS: true}})
+
+            res.status(200).json(games)
+        } 
+
+        if (Allgenres && !Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {age: three ? 3: null},
+                    {age: six ? 6: null},
+                    {age: twelve ? 12: null},
+                    {age: eighteen ? 18: null},
+                ],
+                [Op.and]:{PS:true}
+            }})
+
+                res.status(200).json(games)
+        }
+
+        if (!Allgenres && Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {genre: Shooter ? 'Shooter': null},
+                    {genre: Platformer ? 'Platformer': null},
+                    {genre: RPG ? 'RPG': null},
+                    {genre: MMORPG ? 'MMORPG': null},
+                ],
+                [Op.and]:{PS:true}
+            }})
+    
+            res.status(200).json(games)
+        }
+
+        const games = await Games.findAll(
+            { 
+                where:{
+                    [Op.or]:[
+                        {genre: Shooter ? 'Shooter': null},
+                        {genre: Platformer ? 'Platformer': null},
+                        {genre: RPG ? 'RPG': null},
+                        {genre: MMORPG ? 'MMORPG': null},
+                    ],
+                    [Op.and]:[{[Op.or]:[
+                        {age: three ? 3: null},
+                        {age: six ? 6: null},
+                        {age: twelve ? 12: null},
+                        {age: eighteen ? 18: null},
+                    ]},{PS: true}]
+                    
+                }
+            }
+        )
 
         res.status(200).json(games)
-
+    
     } catch (e) {
         console.log(e)
-        res.status(500).json( { message: 'Something went wrong, try again later' } );
+        res.status(500).json( { message: 'Something (Age) went wrong, try again later' } );
     }
 })
-// api/getOnPS
-gamesRouter.get('/getOnPS', async(req:Request, res:Response)=>{
+
+// /api/getFilteredXbox
+gamesRouter.post('/getFilteredXbox', async(req:Request, res:Response)=>{
     try {
-        const games = await Games.findAll({ where: {PS: true}})
+        console.log(req.body)
+        const { Allages, three, six, twelve, eighteen} = req.body
+        const { Allgenres, Shooter, Platformer, RPG, MMORPG } = req.body
+
+        if (Allgenres && Allages) {
+            const games = await Games.findAll({ where: {Xbox: true}})
+
+            res.status(200).json(games)
+        } 
+
+        if (Allgenres && !Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {age: three ? 3: null},
+                    {age: six ? 6: null},
+                    {age: twelve ? 12: null},
+                    {age: eighteen ? 18: null},
+                ],
+                [Op.and]:{Xbox:true}
+            }})
+
+                res.status(200).json(games)
+        }
+
+        if (!Allgenres && Allages) {
+            const games = await Games.findAll({ where:{
+                [Op.or]:[
+                    {genre: Shooter ? 'Shooter': null},
+                    {genre: Platformer ? 'Platformer': null},
+                    {genre: RPG ? 'RPG': null},
+                    {genre: MMORPG ? 'MMORPG': null},
+                ],
+                [Op.and]:{Xbox:true}
+            }})
+    
+            res.status(200).json(games)
+        }
+
+        const games = await Games.findAll(
+            { 
+                where:{
+                    [Op.or]:[
+                        {genre: Shooter ? 'Shooter': null},
+                        {genre: Platformer ? 'Platformer': null},
+                        {genre: RPG ? 'RPG': null},
+                        {genre: MMORPG ? 'MMORPG': null},
+                    ],
+                    [Op.and]:[{[Op.or]:[
+                        {age: three ? 3: null},
+                        {age: six ? 6: null},
+                        {age: twelve ? 12: null},
+                        {age: eighteen ? 18: null},
+                    ]},{Xbox: true}]
+                    // [Op.and]:{Xbox: true}
+                    
+                }
+            }
+        )
 
         res.status(200).json(games)
-
+    
     } catch (e) {
         console.log(e)
-        res.status(500).json( { message: 'Something went wrong, try again later' } );
+        res.status(500).json( { message: 'Something (Age) went wrong, try again later' } );
     }
 })
-// api/getOnXbox
-gamesRouter.get('/getOnXbox', async(req:Request, res:Response)=>{
-    try {
-        const games = await Games.findAll({ where: {Xbox: true}})
 
-        res.status(200).json(games)
 
-    } catch (e) {
-        console.log(e)
-        res.status(500).json( { message: 'Something went wrong, try again later' } );
-    }
-})
 
 export default gamesRouter
