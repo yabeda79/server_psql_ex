@@ -7,9 +7,8 @@ const gamesRouter = Router()
 gamesRouter.get('/getAll', async (req: Request, res: Response, next:NextFunction): Promise<void> => {
     try{
         const result = await Games.findAll()
-        setTimeout(() => {
-            res.status(200).json(result)
-        }, 1000);
+        
+        res.status(200).json(result)
         
     } catch(e){
         console.log(e)
