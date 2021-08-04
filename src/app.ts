@@ -12,6 +12,7 @@ import { index } from "./routes/index";
 import gamesRouter from './routes/games'
 import authRouter from "./routes/auth";
 import profRouter from './routes/profile'
+import adminEditRouter from './routes/adminedit'
 // Create Express server
 export const app = express();
 
@@ -32,6 +33,7 @@ app.use(express.urlencoded({extended: true}))
 app.use('/api', gamesRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/profile', profRouter)
+app.use('/api/admin', adminEditRouter)
 
 
 app.set("port", process.env.PORT || 3000);
