@@ -1,29 +1,29 @@
 {
     "local": {
     "username": "postgres",
-    "password": "vlad23karol1999",
-    "database": "test2",
+    "password": "root",
+    "database": "native",
     "host": "localhost",
     "dialect": "postgres"
   },
     "development": {
       "username": "postgres",
-      "password": "vlad23karol1999",
-      "database": "test2",
+      "password": "root",
+      "database": "native",
       "host": "localhost",
       "dialect": "postgres"
     },
     "test": {
       "username": "postgres",
-      "password": "vlad23karol1999",
-      "database": "test2",
+      "password": "root",
+      "database": "native",
       "host": "localhost",
       "dialect": "postgres"
     },
     "production": {
       "username": "postgres",
-      "password": "vlad23karol1999",
-      "database": "test2",
+      "password": "root",
+      "database": "native",
       "host": "localhost",
       "dialect": "postgres"
     }
